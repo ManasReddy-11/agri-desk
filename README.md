@@ -1,265 +1,186 @@
-# AgriDesk - Farmer to Consumer Marketplace
+# AgriDesk
 
-A responsive web app with complete navigation flows for the AgriDesk platform - a farmer to consumer marketplace. Built with React, Vite, Tailwind CSS, and React Router.
+AgriDesk is a full-stack farmer-to-consumer marketplace with role-based experiences for consumers, farmers, and admins. This repository contains a React frontend and an Express/MongoDB backend with authentication, cart, orders, payments, reviews, and admin APIs.
 
-## Features
+## Repository Layout
 
-✨ **Role-Based Navigation**
-- **Login Page**: Select role (Consumer, Farmer, Admin) for personalized experience
-- **Consumer Home**: Browse fresh products, search, filter, and manage cart with bottom navigation
-- **Farmer Dashboard**: Manage products, add new listings, track orders, and view inventory
-- **Admin Dashboard**: System overview, user management, and system health monitoring
-
-🎨 **Design Features**
-- Clean green agriculture theme with light gradients
-- Modern white card layouts with shadows
-- Responsive design for all screen sizes
-- AgriDesk header with logo reused across all screens
-- Smooth transitions and interactive components
-
-💚 **Theme**
-- Light green background gradients
-- Green primary buttons with hover effects
-- Orange accent color for fruit icon
-- Consistent rounded corners (xl, 2xl, 3xl)
-- White cards with subtle shadows
-
-⚙️ **Technology Stack**
-- **React 18** - UI library
-- **Vite** - Fast build tool
-- **Tailwind CSS** - Utility-first CSS framework
-- **React Router v6** - Client-side navigation
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Logo.jsx          # AgriDesk logo with orange fruit and green leaf
-│   ├── LoginCard.jsx     # Original login form component
-│   └── Header.jsx        # Header with logo and logout button
-├── pages/
-│   ├── Login.jsx         # Login page with role selection
-│   ├── ConsumerHome.jsx  # Consumer dashboard with products
-│   ├── FarmerDashboard.jsx    # Farmer management interface
-│   └── AdminDashboard.jsx     # Admin system overview
-├── App.jsx               # Router configuration
-├── main.jsx              # React entry point
-└── index.css             # Tailwind directives
-
-├── index.html            # HTML entry point
-├── package.json          # Dependencies and scripts
-├── tailwind.config.js    # Tailwind configuration
-├── postcss.config.js     # PostCSS configuration
-└── vite.config.js        # Vite configuration
+```text
+Agri Desk/
+|-- src/                # React frontend
+|-- backend/            # Express API and MongoDB models
+|-- index.html
+|-- package.json        # Frontend scripts
+`-- README.md
 ```
 
-## Getting Started
+## Tech Stack
 
-### Prerequisites
-- Node.js (v16+)
-- npm
+### Frontend
+- React 18
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
 
-### Installation
+### Backend
+- Node.js
+- Express
+- MongoDB with Mongoose
+- JWT authentication
+- Express Validator
+- Jest and Supertest
 
-1. Install dependencies:
+## Main Features
+
+- Role-based login and registration for consumer, farmer, and admin users
+- Protected frontend routes for each role
+- Product browsing, favorites, cart, and checkout flows for consumers
+- Product and order management flows for farmers
+- Admin dashboard and admin APIs for platform operations
+- Backend APIs for auth, products, users, cart, orders, payments, and admin tools
+
+## Frontend Routes
+
+- `/` and `/login` - login screen
+- `/register` - user registration
+- `/consumer` - consumer dashboard
+- `/consumer/cart` - consumer cart
+- `/consumer/checkout` - checkout flow
+- `/farmer` - farmer dashboard
+- `/admin` - admin dashboard
+
+## Backend API Surface
+
+- `/api/auth` - authentication and current-user endpoints
+- `/api/products` - product catalog and favorites
+- `/api/users` - user profile operations
+- `/api/cart` - cart and checkout preparation
+- `/api/orders` - consumer and farmer order flows
+- `/api/payment` - payment endpoints
+- `/api/admin` - admin operations
+- `/api/health` - server health check
+
+## Prerequisites
+
+- Node.js 16+
+- npm 8+
+- MongoDB connection string
+
+## Environment Variables
+
+### Frontend
+
+Create a root `.env` file:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+### Backend
+
+Copy `backend/.env.example` to `backend/.env` and fill in the required values.
+
+Minimum values to run locally:
+
+```env
+PORT=5000
+NODE_ENV=development
+CLIENT_URL=http://localhost:5173
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+JWT_REFRESH_SECRET=your_refresh_secret
+```
+
+## Installation
+
+Install frontend dependencies from the project root:
+
 ```bash
 npm install
 ```
 
-### Development
+Install backend dependencies:
 
-Start the development server:
+```bash
+cd backend
+npm install
+```
+
+## Running Locally
+
+Start the backend in one terminal:
+
+```bash
+cd backend
+npm run dev
+```
+
+Start the frontend in a second terminal:
+
 ```bash
 npm run dev
 ```
 
-The app will open at `http://localhost:5173/`
+Default local URLs:
 
-### Build
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
+- Health check: `http://localhost:5000/api/health`
 
-Create a production build:
-```bash
-npm run build
+## Available Scripts
+
+### Frontend
+
+- `npm run dev` - start Vite dev server
+- `npm run build` - create production build
+- `npm run preview` - preview production build locally
+
+### Backend
+
+- `npm start` - run the backend server
+- `npm run dev` - run the backend with nodemon
+- `npm test` - run backend tests
+- `npm run test:api` - run API test script
+- `npm run lint` - lint backend files
+- `npm run seed` - seed the database
+
+## Project Structure
+
+```text
+src/
+|-- components/
+|-- constants/
+|-- context/
+|-- pages/
+|-- services/
+|-- App.jsx
+|-- index.css
+`-- main.jsx
+
+backend/
+|-- config/
+|-- controllers/
+|-- middleware/
+|-- models/
+|-- routes/
+|-- scripts/
+|-- services/
+|-- utils/
+|-- __tests__/
+`-- server.js
 ```
-
-### Preview
-
-Preview the production build locally:
-```bash
-npm run preview
-```
-
-## Navigation Flow
-
-### Login Page (`/`)
-- Select role: Consumer, Farmer, or Admin
-- Enter email and password
-- Redirects to role-specific dashboard on login
-
-### Consumer Home (`/consumer`)
-**Features:**
-- Search bar to find products and farmers
-- Filter chips (All, Vegetables, Fruits, Dairy, Organic)
-- Product grid with:
-  - Product image (emoji icons)
-  - Price in Indian Rupees (₹)
-  - Farmer name
-  - Rating stars
-  - Add to cart button (adds item to local cart state)
-- Header includes a cart icon with item count; tap to view cart
-- Bottom navigation with:
-  - Home - Browse products
-  - Orders - Order history
-  - Favorites - Saved products
-  - Profile - User information
-- Logout button in header
-
-### Cart Screen (`/consumer/cart`)
-- Displays all products added to cart
-- Quantity controls (+ / -) for each item
-- Item subtotal and total price (₹)
-- "Proceed to Checkout" button navigates to checkout
-
-### Checkout Screen (`/consumer/checkout`)
-- Delivery address textarea
-- Payment method selection (COD, Card, UPI)
-- Order summary with total price
-- "Place Order" button clears cart and returns to home
-
-### Farmer Dashboard (`/farmer`)
-**Features:**
-- Welcome message and quick stats:
-  - Total Products (units in stock)
-  - Inventory Value (₹)
-  - Total Orders received
-  - Completed Orders
-- Add Product functionality:
-  - Product name input
-  - Quantity (kg) input
-  - Price (₹/kg) input
-  - Form validation
-- Product List:
-  - View all posted products
-  - Stock status indicators
-  - Delete product option
-  - Price per kg display
-- Recent Orders:
-  - Order ID and status
-  - Product details
-  - Date and price
-  - Completed/Processing status
-- Logout button in header
-
-### Admin Dashboard (`/admin`)
-**Features:**
-- System Overview Tab:
-  - Total Products (248)
-  - Total Farmers (42)
-  - Total Orders (156)
-  - Revenue (₹45,320)
-  - Quick action buttons: View Logs, Manage Roles, Settings, Reports
-- Users Tab:
-  - Recent users list
-  - User role display
-  - Approval status
-  - Join date tracking
-- System Health Tab:
-  - Server status with uptime percentage
-  - Database performance metrics
-  - API response time
-  - Progress bar indicators
-  - System settings (toggles):
-    - Maintenance Mode
-    - Email Notifications
-    - Auto Backups
-- Logout button in header
-
-## Component Details
-
-### Header Component
-- Displays AgriDesk logo
-- Shows logout button on all authenticated pages
-- Navigates to login on logout
-
-### Logo Component
-- Custom SVG with orange fruit icon
-- Green leaf accent
-- Bold "AgriDesk" text
-- Tagline: "Farm to Table Marketplace"
-
-### Login Component
-- Role selection with visual feedback
-- Email and password validation
-- Role-based routing using `useNavigate`
-
-### Consumer Home Component
-- Product grid with search functionality
-- Dynamic pricing in Indian Rupees
-- Bottom navigation for multi-tab interface
-- Sample data for 6 products
-
-### Farmer Dashboard Component
-- Summary cards with statistics
-- Add product form modal
-- Editable product list
-- Order tracking with status badges
-- Delete product functionality
-
-### Admin Dashboard Component
-- Tabbed interface (Overview, Users, System)
-- Gradient stat cards
-- User management list
-- System health monitoring
-- Settings toggles
-
-## Customization
-
-### Colors
-Edit `tailwind.config.js` to customize the green palette:
-```javascript
-colors: {
-  primary: {
-    600: '#16a34a',
-    700: '#15803d',
-  },
-}
-```
-
-### Add New Screens
-1. Create new page component in `src/pages/`
-2. Add route in `App.jsx`:
-```jsx
-<Route path="/your-page" element={<YourComponent />} />
-```
-
-### Modify Product Data
-Edit the sample data arrays in:
-- `ConsumerHome.jsx` - products array
-- `FarmerDashboard.jsx` - products state
-- `AdminDashboard.jsx` - stats array
 
 ## Notes
 
-- This is a **UI-only implementation** with no backend integration
-- No actual authentication or database calls
-- All state is local to components
-- Perfect for prototyping and design validation
-- Ready to integrate with backend APIs
+- The frontend expects the backend API base URL from `VITE_API_URL` and falls back to `http://localhost:5000/api`.
+- The backend enables CORS for `CLIENT_URL`, which should match the frontend origin.
+- Additional backend module guides are available in the `backend/` folder for auth, cart, orders, payments, products, reviews, and admin operations.
 
-## Future Enhancements
+## GitHub
 
-- Add API integration for real data
-- Implement actual authentication
-- Add payment gateway integration
-- Real-time order tracking
-- Push notifications
-- User reviews and ratings
-- Advanced search and filtering
-- Wishlist functionality
-- Inventory management API calls
+Repository: <https://github.com/ManasReddy-11/agri-desk>
 
 ## License
 
-© 2026 AgriDesk. All rights reserved.
+MIT
 
